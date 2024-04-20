@@ -34,6 +34,6 @@ void melody(int counter) {
   __delay_cycles(100000);
   P1OUT |= LED_GREEN;
   P1OUT |= LED_RED;
-  if(counter == 3){return;}
-  melody(counter++);
+  if(counter == 6){return;}
+  melody(++counter);
 }

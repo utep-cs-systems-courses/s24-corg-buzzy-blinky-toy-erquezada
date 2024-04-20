@@ -5,10 +5,7 @@ void configureClocks();
 void enableWDTInterrupts();
 void timerAUpmode();
 
-unsigned int get_sr();
-void set_sr(unsigned int sr);
-void or_sr(unsigned int mask);
-void and_sr(unsigned int mask);
+unsigned char gert_sr();
+void set_sr(), or_sr(), and_sr();
 
-
-#endif // libTimer_included
+#endif // included

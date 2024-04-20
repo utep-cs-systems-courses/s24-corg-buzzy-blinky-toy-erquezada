@@ -1,30 +1,39 @@
+
+#include <msp430.h>
+#include "libTimer.h"
+#include "buzzer.h"
+#include "led.h"
+
 void melody(int counter) {
-  // Specific pitch numbers and note durations (in microseconds)
-  int notes[] = {523, 659, 783, 493, 523, 587, 523, 880, 783, 1046, 783, 698, 659, 698, 659}; // Plays a small melody
-  int durations[] = {300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000};
-  int numNotes = sizeof(notes) / sizeof(notes[0]); // Array size
-  
-  // Play each note
+  //specific pitch number
+  int notes[] = {784, 784, 784, 622, 698, 698, 698, 587};
+  // Notes are G5, G5, G5, Eb5 F5,F5,F5,D5
+  int numNotes = sizeof(notes) / sizeof(notes[0]);//array size
+  // Play each note twice simultaneously
+  int cycle;
   for (int i = 0; i < numNotes; i++) {
-    // Turn on green LED and turn off red LED
+    //first note turn off red and on green
     P1OUT |= LED_GREEN;
+    __delay_cycles(10000);
     P1OUT &= ~LED_RED;
     buzzer_set_period(notes[i]);
-    __delay_cycles(durations[i]); // Delay based on note duration
-    
-    // Turn on red LED and turn off green LED
+    __delay_cycles(1000000);
+    //little wait
+
+    //the opposite lights
     P1OUT |= LED_RED;
+    __delay_cycles(100000);
     P1OUT &= ~LED_GREEN;
-    buzzer_set_period(notes[i]);
-    __delay_cycles(durations[i]); // Delay based on note duration
+    buzzer_set_period(notes[i]); 
+    __delay_cycles(7000000);
   }
-  
-  // Turn off both LEDs after playing the melody
+  //after notes , there both lights on , then off , and repeat cycle
+  __delay_cycles(1000000);
   P1OUT &= ~LED_RED;
   P1OUT &= ~LED_GREEN;
-  
-  // If counter is less than 3, repeat the melody (recursive call)
-  if (counter < 3) {
-    melody(counter + 1); // Increment the counter for recursion
-  }
+  __delay_cycles(100000);
+  P1OUT |= LED_GREEN;
+  P1OUT |= LED_RED;
+  if(counter == 3){return;}
+  melody(counter++);
 }

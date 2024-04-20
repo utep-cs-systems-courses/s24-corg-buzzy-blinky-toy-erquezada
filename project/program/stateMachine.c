@@ -1,31 +1,36 @@
+
 #include <msp430.h>
 #include "libTimer.h"
 #include "buzzer.h"
 #include "led.h"
 
-void stateMachine() {
-  char p1val = P1IN;  // Read bottom buttons
-  char p2val = P2IN;  // Read upper buttons
+void stateMachine()
+{
+  char p1val = P1IN;  // define button from bottom
+  char p2val = P2IN;  // help detects upper buttons
 
-  if (!(p2val & TOPS1)) {
-    // Button TOPS1 pressed
-    P1OUT &= ~LED_RED;
-    melody(0);
-  } else if (!(p2val & TOPS2)) {
-    // Button TOPS2 pressed
-    randomSound();
-  } else if (!(p2val & TOPS3)) {
-    // Button TOPS3 pressed
-    alarmSound();
-  } else if (!(p2val & TOPS4)) {
-    // Button TOPS4 pressed
-    // Handle TOPS4 button press here
-  } else if (!(p1val & SW1)) {
-    // Button SW1 pressed
-    // Handle SW1 button press here
-  } else {
-    // No button pressed, turn off buzzer and LEDs
-    buzzer_set_period(0);
-    P1OUT &= ~LEDS;
+  switch (p2val & (TOPS1 | TOPS2 | TOPS3 | TOPS4))
+  {
+    case TOPS1:
+      // Bottom 1: play a friendly melody
+      P1OUT &= ~LED_RED;
+      melody(0);
+      break;
+    case TOPS2:
+      // Bottom 2: play alarm sound
+      alarmSound();
+      break;
+    case TOPS3:
+      // Bottom 3: play a crazy song corresponding with lights
+      randomSound();
+      break;
+    case TOPS4:
+      // Bottom 4: add code for this case if needed
+      break;
+    default:
+      // No top buttons pressed: turn off buzzer and LEDs
+      buzzer_set_period(0);
+      P1OUT &= ~LEDS;
+      break;
   }
 }

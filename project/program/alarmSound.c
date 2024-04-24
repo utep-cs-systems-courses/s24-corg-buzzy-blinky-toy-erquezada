@@ -6,10 +6,10 @@
 void alarmSound() {
   int i = 0;
   while (1) {
-    if (i % 2 == 0 || i % 6 == 0) {
+    if (i % 6 == 0) {
       P1OUT |= LED_GREEN;         // Turn on green LED
       P1OUT &= ~LED_RED;          // Turn off red 
-      buzzer_set_period(9000);    // 2kHz
+      buzzer_set_period(8000);    // 2kHz
     } else {
       P1OUT |= LED_RED;           // tURN ON RED led
       P1OUT &= ~LED_GREEN;        // tURN OFF GREEN led

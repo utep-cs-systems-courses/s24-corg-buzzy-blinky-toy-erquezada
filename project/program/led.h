@@ -12,8 +12,8 @@
 #define TOPSW (TOPS1 | TOPS2 | TOPS3 | TOPS4)
 
 void stateMachine();
-void crazySound();
+void alarmSound();
 void melody(int counter);
-void weirdSound();
+void randomSound();
 
 #endif // included

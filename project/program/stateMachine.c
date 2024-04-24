@@ -3,35 +3,44 @@
 #include "buzzer.h"
 #include "led.h"
 
+// Function declarations
 void randomSound();
 void alarmSound();
-void stateMachine()
-{
-  char p1val = P1IN;  //define botton from bottom
-  char p2val = P2IN;  //help detects upper bottons
+void melody(int);
 
-  if( p2val & TOPS1 ? 0 : 1 )
-    { //bottom 1 a friendly melody :D
-      P1OUT &= ~LED_RED;
-      melody(0);
-    }
-  else if( p2val & TOPS2 ? 0 : 1)
-    { //bottom 2 random sound and dimmy lights
-      randomSound();
-    }
-  else if( p2val & TOPS3 ? 0 : 1)
-    {
-      // A sound that corresponds with the lights.
-      alarmSound();
-    }
-  else if( p2val & TOPS4 ? 0 : 1){
+// Function to determine the highest-priority button pressed
+int getButtonPressed() {
+    char p2val = P2IN; // Read input from port 2
+    if (p2val & TOPS1) return 1;
+    if (p2val & TOPS2) return 1;
+    if (p2val & TOPS3) return 1;
+    if (p2val & TOPS4) return 1;
+    return 0; // No button pressed
+}
 
-  }
-  else if (p1val & SW1 ? 0 : 1){
+void stateMachine() {
+    int buttonPressed = getButtonPressed();
 
-  }
-  else{
+    // Reset buzzer and LEDs by default
     buzzer_set_period(0);
     P1OUT &= ~LEDS;
-  }
+
+    switch (buttonPressed) {
+        case 1: // Button 1: Play a friendly melody
+            P1OUT &= ~LED_RED; // Turn off the red LED
+            melody(0);
+            break;
+        case 2: // Button 2: Trigger a random sound
+            randomSound();
+            break;
+        case 3: // Button 3: Activate an alarm sound
+            alarmSound();
+            break;
+        case 4: // Button 4: Additional functionality can be added here
+            // Implement functionality if needed
+            break;
+        default: // No button pressed
+            // Nothing to do if no buttons are pressed
+            break;
+    }
 }

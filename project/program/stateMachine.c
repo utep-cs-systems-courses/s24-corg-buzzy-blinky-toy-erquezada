@@ -22,7 +22,7 @@ void stateMachine() {
     int buttonPressed = getButtonPressed();
 
     switch (buttonPressed) {
-        case 1: // Button 1: Play a friendly melody
+        case 1: // Button 1: Play a melody
             P1OUT &= ~LED_RED; // Turn off the red LED
             melody(0);
             break;
@@ -32,8 +32,8 @@ void stateMachine() {
         case 3: // Button 3: Activate an alarm sound
             alarmSound();
             break;
-        case 4: // Button 4: Additional functionality can be added here
-            // Implement functionality if needed
+        case 4: // Button 4: Play a c major scale
+            cScale();
             break;
         default: // No button pressed
         // Reset buzzer and LEDs by default

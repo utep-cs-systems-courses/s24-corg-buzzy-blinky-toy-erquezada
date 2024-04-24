@@ -15,5 +15,6 @@ void stateMachine();
 void alarmSound();
 void melody(int counter);
 void randomSound();
+void cScale();
 
 #endif // included

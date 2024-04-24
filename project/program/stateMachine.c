@@ -11,19 +11,15 @@ void melody(int);
 // Function to determine the highest-priority button pressed
 int getButtonPressed() {
     char p2val = P2IN; // Read input from port 2
-    if (p2val & TOPS1) return 1;
-    if (p2val & TOPS2) return 1;
-    if (p2val & TOPS3) return 1;
-    if (p2val & TOPS4) return 1;
+    if (p2val & TOPS1 ? 0 : 1) return 1;
+    if (p2val & TOPS2 ? 0 : 1) return 1;
+    if (p2val & TOPS3 ? 0 : 1) return 1;
+    if (p2val & TOPS4 ? 0 : 1) return 1;
     return 0; // No button pressed
 }
 
 void stateMachine() {
     int buttonPressed = getButtonPressed();
-
-    // Reset buzzer and LEDs by default
-    buzzer_set_period(0);
-    P1OUT &= ~LEDS;
 
     switch (buttonPressed) {
         case 1: // Button 1: Play a friendly melody
@@ -40,7 +36,9 @@ void stateMachine() {
             // Implement functionality if needed
             break;
         default: // No button pressed
-            // Nothing to do if no buttons are pressed
+        // Reset buzzer and LEDs by default
+            buzzer_set_period(0);
+            P1OUT &= ~LEDS;
             break;
     }
 }

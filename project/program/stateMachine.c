@@ -12,9 +12,9 @@ void melody(int);
 int getButtonPressed() {
     char p2val = P2IN; // Read input from port 2
     if (p2val & TOPS1 ? 0 : 1) return 1;
-    if (p2val & TOPS2 ? 0 : 1) return 1;
-    if (p2val & TOPS3 ? 0 : 1) return 1;
-    if (p2val & TOPS4 ? 0 : 1) return 1;
+    if (p2val & TOPS2 ? 0 : 1) return 2;
+    if (p2val & TOPS3 ? 0 : 1) return 3;
+    if (p2val & TOPS4 ? 0 : 1) return 4;
     return 0; // No button pressed
 }
 

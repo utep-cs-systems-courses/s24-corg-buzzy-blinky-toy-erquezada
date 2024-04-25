@@ -3,11 +3,6 @@
 #include "buzzer.h"
 #include "led.h"
 
-// Function declarations
-void randomSound();
-void alarmSound();
-void melody(int);
-
 // Function to determine the highest-priority button pressed
 int getButtonPressed() {
     char p2val = P2IN; // Read input from port 2

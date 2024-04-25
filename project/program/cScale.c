@@ -6,7 +6,7 @@
 
 void cScale(int counter) {
   //specific pitch number
-  float notes[] = {523.25, 587.33, 659.25, 698.46, 783.99, 880, 987.77};
+  float notes[] = {987.77, 923.33, 880, 783.99, 698.46, 659.25, 587.33, 523.25};
   // Notes are reversed
   int numNotes = sizeof(notes);//array size
   // Play each note twice simultaneously

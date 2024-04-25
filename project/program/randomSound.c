@@ -3,8 +3,7 @@
 #include "buzzer.h"
 #include "led.h"
 
-
-int notes[] = {698, 659, 698, 587, 659, 523, 587};
+float notes {587.33, 523.25, 659.25, 587.33, 698.46, 659.25, 698.46};
 // Notes are F5, E5, F5, D5, E5, C5, D5
 // Function to control the LED dimming from brightest to dimmest
 

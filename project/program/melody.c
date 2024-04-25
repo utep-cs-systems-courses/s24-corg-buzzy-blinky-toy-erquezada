@@ -1,39 +1,39 @@
-
 #include <msp430.h>
 #include "libTimer.h"
 #include "buzzer.h"
 #include "led.h"
 
 void melody(int counter) {
-  //specific pitch number
-  int notes[] = {784, 784, 784, 622, 698, 698, 698, 587};
-  // Notes are reversed
-  int numNotes = sizeof(notes) / sizeof(notes[0]);//array size
-  // Play each note twice simultaneously
-  int cycle;
-  for (int i = 0; i < numNotes; i++) {
-    //first note turn off red and on green
-    P1OUT |= LED_GREEN;
-    __delay_cycles(10000);
-    P1OUT &= ~LED_RED;
-    buzzer_set_period(notes[i]);
-    __delay_cycles(1000000);
-    //little wait
+  // Define an array of float for pitches (frequencies in Hz)
+  float notes[] = {587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.50};  // Added more pitches
 
-    //the opposite lights
+  // Calculate the number of notes
+  int numNotes = sizeof(notes) / sizeof(notes[0]);
+
+  // Loop through each note in the array
+  for (int i = 0; i < numNotes; i++) {
+    // Turn on green LED and turn off red LED
+    P1OUT |= LED_GREEN;
+    P1OUT &= ~LED_RED;
+
+    // Set buzzer to current note frequency and delay
+    buzzer_set_period(2000000 / notes[i]);  // Correct calculation of the period from frequency
+    __delay_cycles(1000000);  // Delay for the duration of the note
+
+    // Turn on red LED and turn off green LED
     P1OUT |= LED_RED;
-    __delay_cycles(100000);
     P1OUT &= ~LED_GREEN;
-    buzzer_set_period(notes[i]); 
-    __delay_cycles(7000000);
+
+    // Repeat the note with a different LED configuration
+    buzzer_set_period(2000000 / notes[i]);  // Repeat with the same note
+    __delay_cycles(7000000);  // Longer delay
   }
-  //after notes , there both lights on , then off , and repeat cycle
-  __delay_cycles(1000000);
-  P1OUT &= ~LED_RED;
-  P1OUT &= ~LED_GREEN;
+
+  // Turn off both LEDs after the sequence
+  P1OUT &= ~(LED_RED | LED_GREEN);
   __delay_cycles(100000);
-  P1OUT |= LED_GREEN;
-  P1OUT |= LED_RED;
-  if(counter == 6){return;}
-  melody(++counter);
+
+  // If counter reaches 6, stop the recursion
+  if (counter == 2) return;
+  melody(++counter);  // Recursive call to play the melody again
 }

@@ -14,12 +14,10 @@ void randomSound() {
     for (int i = 0; i < numNotes; i++) {
       buzzer_set_period(2000000 / notes[i]);  // Convert frequency to timer period assuming a 2 MHz clock
 
-      // Simple LED dimming: cycle brightness with PWM or by varying delay
-      for (int brightness = 0; brightness < 1000; brightness += 100) {
-        P1OUT |= LED_GREEN; // Turn on green LED
-        __delay_cycles(brightness);  // On time varies
-        P1OUT &= ~LED_GREEN; // Turn off green LED
-        __delay_cycles(1000 - brightness); // Off time compensates to keep frequency consistent
+      // Fixed interval LED toggling
+      for (int toggleCount = 0; toggleCount < 10; toggleCount++) {
+        P1OUT ^= LED_GREEN;  // Toggle green LED
+        __delay_cycles(500000);  // Constant delay
       }
 
       __delay_cycles(10000000); // Delay to hold the note
